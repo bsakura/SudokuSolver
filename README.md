@@ -1,42 +1,49 @@
 # Sudoku Solver
+This is a python console program that may show the answer of sudoku problems presented in image files or text file using backtracking algorithm.
 
+## Requirement. 
+### Setting Up Pytesseract
+1. Install tesseract using windows installer available at: https://github.com/UB-Mannheim/tesseract/wiki
+2. Note the tesseract path from the installation.Default installation path at the time the time of this edit was: 
+'C:/Program Files/Tesseract-OCR/tesseract.exe'. It may change so please check the installation path.
+3. ```pip install pytesseract```
+4. Set the tesseract path in the script before calling image_to_string:
+pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+### Setting Up OpenCV
+1. ```pip install opencv-python```
+### Setting up numpy
+1. ```pip install numpy```
 
-## Latar Belakang
-Anda adalah Mr. Khun, saat ini Anda tergabung bersama tim Sweet & Sour untuk mencapai puncak menara. Agar dapat mencapai puncak menara, ada harus melalui serangkaian tes untuk dapat naik ke lantai selanjutnya. Saat ini Anda berada di lantai 18 dan administrator lantai tersebut, yaitu Mr. Le Leo ingin sekali menguji kecerdasan tim Anda dalam membuat strategi. Area permainan pada lantai ini dibagi menjadi 81 area, berbentuk seperti matriks berukuran 9x9. Setiap area ditandai dengan angka, dalam satu kolom maupun satu baris tidak boleh ada angka berulang (seperti pada permainan sudoku). Untuk lolos dari tes ini, tim Anda harus mengumpulkan kristal yang ada pada area bernomor 5. Anda yang bertugas sebagai light bearer (bertugas mengawasi seluruh area permainan dan memberikan petunjuk serta menyusun strategi untuk seluruh anggota tim). Anda bisa berkomunikasi dengan seluruh anggota dan melihat seluruh area permainan melalui lighthouse, tugas Anda adalah mencari tahu nomor untuk semua area permainan dan memberitahukan koordinat (x,y) area-area yang ditandai dengan nomor 5 kepada anggota tim Anda.
+## Run
+1. Clone this project on your device
+2. Change the path in load.py to the path where you installed tesseract.exe 
+```pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'```
+3. In your project directory run 
+```
+python run main.py
+```
+4. An input of the type of file you are going to upload will be requested by integer. Fill with 1 for png file and 2 for txt file.
+5. An input of the file's name will be requested.
+6. The answer of the sudoku problem and the locations of 5 will be presented in the console and also written in txt file inside the folder result.
 
+## Strategy
+This program uses the backtracking algorithm to solve this problem. I personally chose this algorithm because it is the easiest to apply even though it may take a while to get the desired result.
+The backtracking algorithm works in sudoku problem by checking whether it is safe to assign. Check that the same number is not present in the current row, current column and current 3X3 subgrid. After checking for safety, assign the number, and recursively check whether this assignment leads to a solution or not. 
+Time complexity: O(9^(n*n)).
+For every unassigned index, there are 9 possible options so the time complexity is O(9^(n*n)). The time complexity remains the same but there will be some early pruning so the time taken will be much less than the naive algorithm but the upper bound time complexity remains the same to the brute force method.
+Space Complexity: O(n*n).
+To store the output array a matrix is needed.
 
-## Spesifikasi
+## Library
+### Tesseract
+I chose tesseract for this project because it has the feature that I needed which is transforming an image to a string of number. However, I found a lot of troubles during installation since I made a small mistake with the path written in py file. Not only that, it takes very long for the image to show up and there is a certain warning about the RGB in the console I couldn't get rid of.
+### OpenCV
+I used opencv to open and read the image and to create the array. I didn't find any trouble using this library.
+### Numpy
+I used numpy for multidimensional arrays.
 
-#### Spesifikasi untuk program yang dibuat :
-| No | Spesifikasi Program | Jenis |
-| ---- | ---- | ---- |
-| 1 | Program dibuat dalam bahasa Python | Wajib |
-| 2 | Program menerima input berupa file eksternal yang berisi matriks area permainan (disediakan pada repository) dengan lambang '#' yang menandai area belum diketahui nomornya | Wajib |
-| 3 | Program melengkapi area-area yang nomornya belum diketahui, strategi dan heuristik yang digunakan dibebaskan dan menjadi salah satu komponen penilaian. **Pencarian solusi harus dibuat sendiri algoritmanya**. | Wajib |
-| 4 | Tuliskan hasil dari sepesifikasi (3) pada command prompt/terminal dan simpan dalam file eksternal. Buatlah agar mudah dibaca | Wajib |
-| 5 | Tuliskan semua koordinat dari area bernomor 5, tuliskan pada command prompt/terminal dan simpan pada file eksternal yang sama dengan spesifikasi nomor (4). Koordinat dituliskan setelah area permainan | Wajib |
-| 6 | Program dapat membaca inputan dari gambar. **Program hanya perlu dapat membaca gambar spesifik yang ada pada repository**. Library yang digunakan dibebaskan dan tidak ada batasan. | Bonus |
-| 7 | Program diletakkan pada directory src, kemudian file pengujian diletakkan pada directory test, dan hasil pengujian berupa screenshot diletakkan pada directory result | Wajib |
-| 8 | Program dikejakan secara individu, Anda boleh mencari referensi dari manapun namun tidak diperkenankan bekerja sama | Wajib |
-
-#### Edit file readme setelah fork repository ini sehingga mencakup :
-| No | Spesifikasi |
-| ---- | ---- |
-| 1 | Cara penggunaan program, seperti cara untuk kompilasi serta command yang dapat diterima program |
-| 2 | Strategi pencarian solusi yang digunakan dan alasan penggunaannya secara lengkap, termasuk kompleksitas algoritmanya | 
-| 3 | Apabila mengerjakan bonus, tuliskan library yang digunakan serta alasan penggunaannya dan kelebihan serta kekurangnnya menurut Anda |
-| 4 | Tuliskan referensi (berupa link atau judul buku beserta halamannya) yang membantu Anda dalam mengerjakan tugas ini |
-
-
-## Komponen Penilaian 
-| No | Komponen |
-| ---- | ---- |
-| 1 | Kebenaran program dan fungsionalitasnya |
-| 2 | Algoritma yang digunakan beserta alasan penggunaannya | 
-| 3 | AKerapihan kode dan struktur repository |
-| 4 | Kejelasan dan kerapihan readme |
-
-
-## Pengumpulan
-Lakukan merge request hasil fork Anda ke repository ini, informasi selanjutnya mengenai demo akan diberitahukan oleh asisten.
-
+## Reference
+https://stackoverflow.com/questions/50951955/pytesseract-tesseractnotfound-error-tesseract-is-not-installed-or-its-not-i
+https://www.geeksforgeeks.org/sudoku-backtracking-7/
+https://opencv.org/
+https://pypi.org/project/pytesseract/
